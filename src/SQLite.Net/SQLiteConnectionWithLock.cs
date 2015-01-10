@@ -22,6 +22,7 @@
 
 using System;
 using System.Threading;
+using JetBrains.Annotations;
 using SQLite.Net.Interop;
 
 namespace SQLite.Net
@@ -30,6 +31,7 @@ namespace SQLite.Net
     {
         private readonly object _lockPoint = new object();
 
+        [PublicAPI]
         public SQLiteConnectionWithLock(ISQLitePlatform sqlitePlatform, SQLiteConnectionString connectionString)
             : base(
                 sqlitePlatform, connectionString.DatabasePath, connectionString.StoreDateTimeAsTicks, connectionString.Serializer, null,
@@ -37,6 +39,7 @@ namespace SQLite.Net
         {
         }
 
+        [PublicAPI]
         public IDisposable Lock()
         {
             return new LockWrapper(_lockPoint);

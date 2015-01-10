@@ -22,6 +22,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using SQLite.Net.Interop;
 
 namespace SQLite.Net
@@ -40,17 +41,26 @@ namespace SQLite.Net
             Connection = conn;
         }
 
+        [PublicAPI]
         public bool Initialized { get; set; }
+
+        [PublicAPI]
         protected SQLiteConnection Connection { get; set; }
+
+        [PublicAPI]
         public string CommandText { get; set; }
+
+        [PublicAPI]
         protected IDbStatement Statement { get; set; }
 
+        [PublicAPI]
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        [PublicAPI]
         public int ExecuteNonQuery(object[] source)
         {
             Connection.TraceListener.WriteLine("Executing: {0}", CommandText);
@@ -95,6 +105,7 @@ namespace SQLite.Net
             throw SQLiteException.New(r, r.ToString());
         }
 
+        [PublicAPI]
         protected virtual IDbStatement Prepare()
         {
             var stmt = _sqlitePlatform.SQLiteApi.Prepare2(Connection.Handle, CommandText);
